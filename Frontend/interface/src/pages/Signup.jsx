@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import API from "../services/api";
+import { useNavigate } from "react-router-dom";
+;
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -9,7 +11,7 @@ const Signup = () => {
         password: "",
     });
 
-
+    const navigate = useNavigate()
     const [message, setMessage] = useState('');
     const[error, setError] = useState('');
 
@@ -42,8 +44,9 @@ const Signup = () => {
     };
     
     return(
-        <div className="max-w-md mx-auto mt-10 p-6 border rounded shadow-md bg-white">
-            <h2 className="text-2xl font-semibold mb-4"> SignUp</h2>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-200 px-4">
+            <div className=" max-w-md p-8 space-y-6 bg-white rounded-xl shadow-lg">
+                <h2 className="text-3xl font-bold text-center text-gray-800"> Create your Account </h2>
 
             {message && <p className="text-green-600 mb-4">{message}</p>}
             {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -68,9 +71,23 @@ const Signup = () => {
                     <label className="block font-medium">Password</label>
                     <input type="password" name="password" value={formData.password} onChange={handleChange} className="w-full p-2 border rounded"></input>
                 </div>
+                <br />
 
-                <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-600">SignUP</button>
+                <button type="submit" className="flex items-center justify-center w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-600">SignUP</button>
             </form>
+
+            <p className="text-sm text-center text-gray-600">
+            Already have an account?{" "}
+            <span
+                className="text-blue-600 cursor-pointer hover:underline"
+                onClick={() => navigate("/login")}
+            >
+                Login
+            </span>
+            </p>
+            </div>
+            
+
         </div>
     );
 };
