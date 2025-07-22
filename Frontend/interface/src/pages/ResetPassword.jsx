@@ -1,10 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import API from "../services/api";
-import { useParams} from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
 
 const ResetPassword = () => {
-    const {token} = useParams();
+    const { token } = useParams();
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [success, setSuccess] = useState('');
@@ -14,7 +13,7 @@ const ResetPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-        setSuccess('')
+        setSuccess('');
 
         if (password !== confirmPassword) {
             setError('Passwords do not match');
@@ -22,7 +21,7 @@ const ResetPassword = () => {
         }
 
         try {
-            const res = await API.post(`/reset-password/${token}`, {password});
+            const res = await API.post(`/reset-password/${token}`, { password });
             setSuccess(res.data.message || 'Password has been reset successfully');
             setSubmitted(true);
         } catch (err) {
@@ -30,35 +29,46 @@ const ResetPassword = () => {
         }
     };
 
-    return(
-        <div className="max-w-md mx-auto mt-10 p-6 border rounded shadow-md bg-white">
-            <h2 className="text-2xl font-semibold mb-4"> Reset Password</h2>
+    return (
+        <div className="container d-flex justify-content-center align-items-center min-vh-100">
+            <div className="card shadow p-4" style={{ maxWidth: '450px', width: '100%' }}>
+                <h2 className="text-center mb-4">Reset Password</h2>
 
-            {success && <p className="text-green-600 mb-4">{success}</p>}
-            {error && <p className="text-red-500 mb-4">{error}</p>}
+                {success && <div className="alert alert-success py-1 text-center">{success}</div>}
+                {error && <div className="alert alert-danger py-1 text-center">{error}</div>}
 
+                {!submitted && (
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label className="form-label">New Password:</label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="form-control"
+                                required
+                            />
+                        </div>
 
-            {!submitted && (
-                <form onSubmit={handleSubmit} className="space-y-4">  
-                <div>
-                    <label  className="block mb-2"> New Password:</label>
-                    <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full p-2 border rounded" />
-                </div>
+                        <div className="mb-3">
+                            <label className="form-label">Confirm Password:</label>
+                            <input
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                className="form-control"
+                                required
+                            />
+                        </div>
 
-                <div>
-                    <label  className="block mb-2"> Confirm Password:</label>
-                    <input type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full p-2 border rounded" />
-                </div>
-
-                <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">Update Password</button>
-                    
-                </form>
-            )}
-
-            
+                        <button type="submit" className="btn btn-primary w-100">
+                            Update Password
+                        </button>
+                    </form>
+                )}
+            </div>
         </div>
     );
-
-}
+};
 
 export default ResetPassword;

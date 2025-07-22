@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
-;
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -11,15 +10,13 @@ const Signup = () => {
         password: "",
     });
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [message, setMessage] = useState('');
-    const[error, setError] = useState('');
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
-    //Handle form submission 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,8 +25,8 @@ const Signup = () => {
 
         try {
             const res = await API.post('/signup', formData);
-            if(res.status === 200){
-                setMessage('Sign up Successful! You are ready to login.');
+            if (res.status === 200) {
+                setMessage('Sign up successful! You are ready to login.');
                 setFormData({
                     firstName: "",
                     lastName: "",
@@ -37,57 +34,84 @@ const Signup = () => {
                     password: ""
                 });
             }
-        } catch(err) {
+        } catch (err) {
             setError(err.response?.data?.message || "Signup failed");
         }
-            
     };
-    
-    return(
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-200 px-4">
-            <div className=" max-w-md p-8 space-y-6 bg-white rounded-xl shadow-lg">
-                <h2 className="text-3xl font-bold text-center text-gray-800"> Create your Account </h2>
 
-            {message && <p className="text-green-600 mb-4">{message}</p>}
-            {error && <p className="text-red-500 mb-4">{error}</p>}
+    return (
+        <div className="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
+            <div className="card p-4 shadow" style={{ maxWidth: '450px', width: '100%' }}>
+                <h2 className="text-center mb-4">Create your Account</h2>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label className="block font-medium ">First Name</label>
-                    <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className="w-full p-2 border rounded"></input>
-                </div>
+                {message && <div className="alert alert-success text-center py-1">{message}</div>}
+                {error && <div className="alert alert-danger text-center py-1">{error}</div>}
 
-                <div>
-                    <label className="block font-medium">Last Name</label>
-                    <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className="w-full p-2 border rounded"></input>
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label className="form-label">First Name</label>
+                        <input
+                            type="text"
+                            name="firstName"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
 
-                <div>
-                    <label className="block font-medium">Email</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full p-2 border rounded"></input>
-                </div>
+                    <div className="mb-3">
+                        <label className="form-label">Last Name</label>
+                        <input
+                            type="text"
+                            name="lastName"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
 
-                <div>
-                    <label className="block font-medium">Password</label>
-                    <input type="password" name="password" value={formData.password} onChange={handleChange} className="w-full p-2 border rounded"></input>
-                </div>
-                <br />
+                    <div className="mb-3">
+                        <label className="form-label">Email</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
 
-                <button type="submit" className="flex items-center justify-center w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-600">SignUP</button>
-            </form>
+                    <div className="mb-3">
+                        <label className="form-label">Password</label>
+                        <input
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
 
-            <p className="text-sm text-center text-gray-600">
-            Already have an account?{" "}
-            <span
-                className="text-blue-600 cursor-pointer hover:underline"
-                onClick={() => navigate("/login")}
-            >
-                Login
-            </span>
-            </p>
+                    <button type="submit" className="btn btn-primary w-100">
+                        Sign Up
+                    </button>
+                </form>
+
+                <p className="text-center mt-3">
+                    Already have an account?{" "}
+                    <span
+                        className="text-primary text-decoration-underline"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => navigate("/login")}
+                    >
+                        Login
+                    </span>
+                </p>
             </div>
-            
-
         </div>
     );
 };

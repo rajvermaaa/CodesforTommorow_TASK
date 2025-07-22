@@ -32,39 +32,39 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-200">
-            <div className=" max-w-md p-8 space-y-6 bg-white rounded-xl shadow-lg">
-                <h2 className="text-3xl font-bold text-center text-gray-800">Login to Your Account</h2>
+        <div className="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
+            <div className="card shadow p-4" style={{ maxWidth: '400px', width: '100%' }}>
+                <h2 className="text-center mb-4">Login to Your Account</h2>
 
-                {error && <p className="text-red-600 text-sm text-center">{error}</p>}
+                {error && <div className="alert alert-danger text-center py-1">{error}</div>}
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label className="block mb-1 font-medium text-gray-700">Email</label>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label className="form-label">Email</label>
                         <input
                             type="email"
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="form-control"
                             required
                         />
                     </div>
 
-                    <div>
-                        <label className="block mb-1 font-medium text-gray-700">Password</label>
+                    <div className="mb-3">
+                        <label className="form-label">Password</label>
                         <input
                             type="password"
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="form-control"
                             required
                         />
-
-                        <div className="text-right mt-1">
+                        <div className="text-end mt-1">
                             <span
-                                className="text-sm text-blue-600 cursor-pointer hover:underline"
+                                className="text-primary text-decoration-underline"
+                                style={{ cursor: "pointer" }}
                                 onClick={() => navigate("/forgot-password")}
                             >
                                 Forgot Password?
@@ -72,18 +72,20 @@ const Login = () => {
                         </div>
                     </div>
 
-                    <br />
-
-                    <button
-                        type="submit"
-                        className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-200"
-                    >
+                    <button type="submit" className="btn btn-primary w-100">
                         Login
                     </button>
                 </form>
 
-                <p className="text-sm text-center text-gray-600">
-                    Don’t have an account? <span className="text-blue-600 cursor-pointer hover:underline "  onClick={() => navigate("/signup")}>Sign up</span>
+                <p className="text-center mt-3">
+                    Don’t have an account?{" "}
+                    <span
+                        className="text-primary text-decoration-underline"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => navigate("/signup")}
+                    >
+                        Sign up
+                    </span>
                 </p>
             </div>
         </div>
@@ -91,4 +93,3 @@ const Login = () => {
 };
 
 export default Login;
- 
