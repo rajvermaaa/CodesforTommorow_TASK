@@ -21,7 +21,10 @@ const ResetPassword = () => {
         }
 
         try {
-            const res = await API.post(`/reset-password/${token}`, { password });
+            const res = await API.post(`/reset-password/${token}`, {
+                        newPassword: password,
+                        confirmPassword
+                        });
             setSuccess(res.data.message || 'Password has been reset successfully');
             setSubmitted(true);
         } catch (err) {

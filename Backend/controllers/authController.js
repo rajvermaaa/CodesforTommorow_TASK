@@ -142,7 +142,7 @@ exports.resetPassword = async (req, res) => {
         user.resetTokenExpiry = null;
         await user.save();
 
-        return res.status(500).json({message: 'Password has been reset successfully'});
+        return res.status(200).json({message: 'Password has been reset successfully'});
     } catch (error) {
         console.error('Reset Password Error:', error);
         return res.status(500).json({message: 'Server Error'});
